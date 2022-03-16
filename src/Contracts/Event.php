@@ -6,9 +6,14 @@ namespace Al\Client\Contracts;
 
 interface Event
 {
-    public function add(): bool;
+    const WRITE = 1;
+    const READ = 2;
 
-    public function del(): bool;
+    public function add($fd, int $eventType, callable $cb, array $args = []): bool;
+
+    public function del($fd): bool;
 
     public function loop(): void;
+
+    public function exitLoop(): void;
 }

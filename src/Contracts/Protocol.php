@@ -6,9 +6,9 @@ namespace Al\Client\Contracts;
 
 interface Protocol
 {
-    public function containsOne(): bool;
+    public function containsOne(string $buffer, string $headFormat, int $headOffset): array|bool;
 
-    public function pack();
+    public function pack(string $headFormat, string $payload): string;
 
-    public function unpack();
+    public function unpack(string $headFormat, string $bin): int;
 }

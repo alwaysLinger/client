@@ -8,20 +8,26 @@ use Al\Client\Contracts\Protocol;
 
 class Stream implements Protocol
 {
-    public function containsOne(): bool
+    public function containsOne(string $buffer, string $headFormat, int $headOffset): array|bool
     {
-        // TODO: Implement containsOne() method.
-        return true;
+        if (strlen($buffer) <= $headOffset) {
+            return false;
+        }
+        $payloadLength = $this->unpack($headFormat, substr($buffer, 0, $headOffset));
+        if (strlen($buffer) < $headOffset + $payloadLength) {
+            return false;
+        }
+
+        return [substr($buffer, $headOffset, $payloadLength), substr($buffer, $headOffset + $payloadLength)];
     }
 
-    public function pack()
+    public function pack(string $headFormat, string $payload): string
     {
-        // TODO: Implement pack() method.
+        return pack($headFormat, strlen($payload)) . $payload;
     }
 
-    public function unpack()
+    public function unpack(string $headFormat, string $bin): int
     {
-        // TODO: Implement unpack() method.
+        return unpack($headFormat, $bin)[1];
     }
-
 }
