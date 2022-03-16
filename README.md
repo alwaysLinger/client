@@ -1,6 +1,6 @@
 ### INSTALLATION
 ```shell
-copmoser required yylh/client
+composer require yylh/client
 ```
 
 ### EXPAMPLES
