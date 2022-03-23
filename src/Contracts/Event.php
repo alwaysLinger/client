@@ -11,7 +11,7 @@ interface Event
 
     public function add($fd, int $eventType, callable $cb, array $args = []): bool;
 
-    public function del($fd): bool;
+    public function del(): bool;
 
     public function loop(): void;
 

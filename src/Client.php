@@ -6,11 +6,12 @@ namespace Al\Client;
 
 use Al\Client\Contracts\Event;
 use Al\Client\Contracts\Protocol;
+use Al\Client\Contracts\Wrapper;
+use Al\Client\Events\Epoll;
+use Al\Client\Events\Select;
 use Al\Client\Protocols\Stream;
 use Al\Client\Wrappers\StreamWrapper;
 use Al\Client\Wrappers\TextWrapper;
-use Al\Client\Wrappers\Wrapper;
-use Al\Client\Events\Epoll;
 use Exception;
 
 class Client
@@ -75,7 +76,8 @@ class Client
     {
         $url = sprintf('%s://%s:%d', $this->clientMeta['scheme'], $this->clientMeta['host'], $this->clientMeta['port']);
         $context = $this->context;
-        $context['event'] ??= Epoll::class;
+        $context['event'] ??= Select::class;
+        // $context['event'] ??= Epoll::class;
         $context['protocl'] ??= Stream::class;
         $context['wrapper'] ??= $this->clientMeta['scheme'];
         $context['head_format'] ??= 'N';
@@ -122,7 +124,7 @@ class Client
         if (is_null($this->resource)) {
             return false;
         }
-        $this->event->del($this->resource);
+        $this->event->del();
         @fclose($this->resource);
 
         return true;

@@ -101,14 +101,14 @@ class Buffer
         $args = func_get_args();
         if (!is_resource($args[0])) {
             $this->clearBuffer();
-            $this->event->del($args[0]);
+            $this->event->del();
             $this->event->exitLoop();
         }
         $payload = fread($args[0], 1024);
-        if ($payload === '' || 0 === strlen($payload) || $payload === false) {
-            @fclose($args[0]);
+        if ($payload === '' || 0 === strlen((string)$payload) || $payload === false) {
             $this->clearBuffer();
-            $this->event->del($args[0]);
+            $this->event->del();
+            @fclose($args[0]);
             $this->event->exitLoop();
         } else {
             $this->setLastRecBuff($payload);
@@ -125,7 +125,7 @@ class Buffer
         }
         if (!is_resource($args[0])) {
             $this->clearBuffer();
-            $this->event->del($args[0]);
+            $this->event->del();
             $this->event->exitLoop();
         }
         $len = @fwrite($args[0], $buffer);
@@ -134,7 +134,7 @@ class Buffer
         } else {
             @fclose($args[0]);
             $this->clearBuffer();
-            $this->event->del($args[0]);
+            $this->event->del();
             $this->event->exitLoop();
         }
     }

@@ -4,8 +4,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=8.0,<8.2",
-        "ext-event": ">=2.5.5"
+        "php": ">=8.0,<8.2"
     },
     "autoload": {
         "psr-4": {

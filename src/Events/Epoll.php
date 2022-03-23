@@ -32,11 +32,12 @@ class Epoll implements Event
         return false;
     }
 
-    public function del($fd): bool
+    public function del(): bool
     {
-        $rret = ($this->fds[get_resource_id($fd)][Event::WRITE] ?? null)?->del();
-        $wret = ($this->fds[get_resource_id($fd)][Event::READ] ?? null)?->del();
-        unset($this->fds[$fd]);
+        $rret = ($this->fds[Event::WRITE] ?? null)?->del();
+        $wret = ($this->fds[Event::READ] ?? null)?->del();
+        unset($this->fds[Event::WRITE]);
+        unset($this->fds[Event::READ]);
         return $rret && $wret;
     }
 

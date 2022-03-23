@@ -6,6 +6,7 @@ namespace Al\Client\Wrappers;
 
 use Al\Client\Buffer;
 use Al\Client\Contracts\Event;
+use Al\Client\Contracts\Wrapper;
 use Exception;
 
 class StreamWrapper implements Wrapper
@@ -62,7 +63,7 @@ class StreamWrapper implements Wrapper
             $this->event->exitLoop();
             return;
         }
-        $this->event->del($this->resource);
+        $this->event->del();
         @fclose($this->resource);
         $this->event->exitLoop();
     }
@@ -70,7 +71,7 @@ class StreamWrapper implements Wrapper
     public function stream_write(string $data): int
     {
         if ($this->isClose()) {
-            $this->event->del($this->resource);
+            $this->event->del();
             $this->event->exitLoop();
             return 0;
         }
