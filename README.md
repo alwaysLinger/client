@@ -2,7 +2,6 @@
 ```shell
 composer require yylh/client
 ```
-### 查看del是否正确 send方法加判断
 ### USAGE
 ```PHP
 # client
